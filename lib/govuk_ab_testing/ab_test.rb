@@ -21,9 +21,8 @@ module GovukAbTesting
       "GOVUK-ABTest-#{meta_tag_name}"
     end
 
-    # `example` -> `Example`
     def meta_tag_name
-      ab_test_name.capitalize
+      ab_test_name
     end
   end
 end
