@@ -61,7 +61,12 @@ by the extension and analytics.
 </head>
 ```
 
-You'll be able to test the controller like this:
+#### Test helpers
+
+The most common usage of an A/B test is to serve two different variants of the
+same page. In this situation, you can test the controller using `with_variant`.
+It will configure the request and assert that the response is configured
+correctly:
 
 ```ruby
 # test/controllers/party_controller_test.rb
@@ -72,9 +77,45 @@ class PartyControllerTest < ActionController::TestCase
     with_variant your_ab_test_name: "B" do
       get :show
 
-      assert_rendered "new_show_template_to_be_tested"
-      assert_ab_test_rendered "example"
+      # Optional assertions about page content of the B variant
     end
+  end
+end
+```
+
+Pass the `assert_meta_tag: false` option to skip assertions about the `meta`
+tag, for example because the variant returns a redirect response rather than
+returning an HTML page.
+
+```ruby
+# test/controllers/party_controller_test.rb
+class PartyControllerTest < ActionController::TestCase
+  include GovukAbTesting::MinitestHelpers
+
+  should "redirect the user the B version" do
+    with_variant your_ab_test_name: "B", assert_meta_tag: false do
+      get :show
+
+      assert_response 302
+      assert_redirected_to { controller: "other_controller", action: "show" }
+    end
+  end
+end
+```
+
+To test the negative case in which a page is unaffected by the A/B test:
+
+```ruby
+# test/controllers/party_controller_test.rb
+class PartyControllerTest < ActionController::TestCase
+  include GovukAbTesting::MinitestHelpers
+
+  should "show the original " do
+    add_ab_test_header("your_ab_test_name", "B")
+
+    get :show
+
+    assert_unaffected_by_ab_test
   end
 end
 ```

@@ -5,17 +5,31 @@ module GovukAbTesting
 
       ab_test = GovukAbTesting::AbTest.new(ab_test_name.to_s)
 
-      previous_variant = @request.headers[ab_test.request_header]
       @request.headers[ab_test.request_header] = variant
-
       requested_variant = ab_test.requested_variant(@request)
 
       yield
 
       assert_equal ab_test.response_header, response.headers['Vary'], "You probably forgot to use `configure_response`"
-      assert_meta_tag "govuk:ab-test", ab_test.meta_tag_name + ':' + requested_variant.variant_name, "You probably forgot to add the `analytics_meta_tag`"
 
-      @request.headers[ab_test.request_header] = previous_variant
+      unless args[:assert_meta_tag] == false
+        assert_meta_tag "govuk:ab-test",
+          ab_test.meta_tag_name + ':' + requested_variant.variant_name,
+          "You probably forgot to add the `analytics_meta_tag`"
+      end
+    end
+
+    def setup_ab_variant(ab_test_name, variant)
+      ab_test = GovukAbTesting::AbTest.new(ab_test_name)
+
+      @request.headers[ab_test.request_header] = variant
+    end
+
+    def assert_unaffected_by_ab_test
+      assert_nil response.headers['Vary'],
+        "`Vary` header is being added to a page which is outside of the A/B test"
+
+      assert_select "meta[name='govuk:ab-test']", false
     end
 
   private
