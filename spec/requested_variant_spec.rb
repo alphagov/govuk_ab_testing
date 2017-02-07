@@ -2,12 +2,12 @@ require 'spec_helper'
 
 RSpec.describe GovukAbTesting::RequestedVariant do
   def ab_test
-    GovukAbTesting::AbTest.new("education")
+    GovukAbTesting::AbTest.new("EducationNav")
   end
 
   describe '#variant_name' do
     it "returns the variant" do
-      activesupport_request = double(headers: { 'HTTP_GOVUK_ABTEST_EDUCATION' => 'A'})
+      activesupport_request = double(headers: { 'HTTP_GOVUK_ABTEST_EDUCATIONNAV' => 'A'})
 
       requested_variant = ab_test.requested_variant(activesupport_request)
 
@@ -17,7 +17,7 @@ RSpec.describe GovukAbTesting::RequestedVariant do
 
   describe '#variant_a?' do
     it "returns the variant" do
-      activesupport_request = double(headers: { 'HTTP_GOVUK_ABTEST_EDUCATION' => 'A'})
+      activesupport_request = double(headers: { 'HTTP_GOVUK_ABTEST_EDUCATIONNAV' => 'A'})
 
       requested_variant = ab_test.requested_variant(activesupport_request)
 
@@ -28,7 +28,7 @@ RSpec.describe GovukAbTesting::RequestedVariant do
 
   describe '#variant_b?' do
     it "returns the variant" do
-      activesupport_request = double(headers: { 'HTTP_GOVUK_ABTEST_EDUCATION' => 'B'})
+      activesupport_request = double(headers: { 'HTTP_GOVUK_ABTEST_EDUCATIONNAV' => 'B'})
 
       requested_variant = ab_test.requested_variant(activesupport_request)
 
@@ -39,27 +39,27 @@ RSpec.describe GovukAbTesting::RequestedVariant do
 
   describe '#analytics_meta_tag' do
     it "returns the tag" do
-      activesupport_request = double(headers: { 'HTTP_GOVUK_ABTEST_EDUCATION' => 'A'})
+      activesupport_request = double(headers: { 'HTTP_GOVUK_ABTEST_EDUCATIONNAV' => 'A'})
 
       requested_variant = ab_test.requested_variant(activesupport_request)
 
-      expect(requested_variant.analytics_meta_tag).to eql("<meta name=\"govuk:ab-test\" content=\"Education:A\">")
+      expect(requested_variant.analytics_meta_tag).to eql("<meta name=\"govuk:ab-test\" content=\"EducationNav:A\">")
     end
   end
 
   describe '#configure_response' do
     it "sets the correct header" do
-      activesupport_request = double(headers: { 'HTTP_GOVUK_ABTEST_EDUCATION' => 'A'})
+      activesupport_request = double(headers: { 'HTTP_GOVUK_ABTEST_EDUCATIONNAV' => 'A'})
       requested_variant = ab_test.requested_variant(activesupport_request)
       response = double(headers: {})
 
       requested_variant.configure_response(response)
 
-      expect(response.headers['Vary']).to eql('GOVUK-ABTest-Education')
+      expect(response.headers['Vary']).to eql('GOVUK-ABTest-EducationNav')
     end
 
     it "crashes if the Vary header is already set" do
-      activesupport_request = double(headers: { 'HTTP_GOVUK_ABTEST_EDUCATION' => 'A'})
+      activesupport_request = double(headers: { 'HTTP_GOVUK_ABTEST_EDUCATIONNAV' => 'A'})
       requested_variant = ab_test.requested_variant(activesupport_request)
       response = double(headers: { 'Vary' => 'Some vary header set by someone else'})
 

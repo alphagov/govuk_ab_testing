@@ -22,6 +22,8 @@ Before starting this, you'll need to
 
 - get your cookie listed on [/help/cookies](https://www.gov.uk/help/cookies)
 - configure the CDN [like we did for the Education Navigation test](https://github.com/alphagov/govuk-cdn-config/pull/17).
+The cookie and header name in the CDN config must match the test name parameter
+that you pass to the Gem. The cookie name is case-sensitive.
 - configure Google Analytics (guidelines to follow)
 
 To enable testing in the app, your Rails app needs:
