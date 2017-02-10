@@ -13,12 +13,9 @@ module GovukAbTesting
       assert_equal ab_test.response_header, response.headers['Vary'], "You probably forgot to use `configure_response`"
 
       unless args[:assert_meta_tag] == false
-        raise "Cannot test the A/B meta tag because no expected :dimension parameter was specified by test" unless args[:dimension]
-
-        assert_meta_tag "govuk:ab-test",
-          ab_test.meta_tag_name + ':' + requested_variant.variant_name,
-          args[:dimension],
-          "You probably forgot to add the `analytics_meta_tag`"
+        content = ab_test.meta_tag_name + ':' + requested_variant.variant_name
+        message = "You probably forgot to add the `analytics_meta_tag` to the views"
+        assert_select "meta[name='govuk:ab-test'][content='#{content}']", 1, message
       end
     end
 
@@ -33,12 +30,6 @@ module GovukAbTesting
         "`Vary` header is being added to a page which is outside of the A/B test"
 
       assert_select "meta[name='govuk:ab-test']", false
-    end
-
-  private
-
-    def assert_meta_tag(name, content, dimension, message)
-      assert_select "meta[name='#{name}'][content='#{content}'][data-analytics-dimension='#{dimension}']", 1, message
     end
   end
 end
