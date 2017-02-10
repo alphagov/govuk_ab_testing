@@ -34,8 +34,7 @@ module GovukAbTesting
     #
     # @param [ApplicationController::Response] the `response` in the controller
     def configure_response(response)
-      raise "We're trying to set the Vary header, but this would override the current header" if response.headers['Vary']
-      response.headers['Vary'] = ab_test.response_header
+      response.headers['Vary'] = [response.headers['Vary'], ab_test.response_header].compact.join(', ')
     end
 
     # HTML meta tag used to track the results of your experiment
