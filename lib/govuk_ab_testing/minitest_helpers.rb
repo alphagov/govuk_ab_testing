@@ -10,7 +10,8 @@ module GovukAbTesting
 
       yield
 
-      assert_equal ab_test.response_header, response.headers['Vary'], "You probably forgot to use `configure_response`"
+      assert_match ab_test.response_header, response.headers['Vary'],
+        "You probably forgot to use `configure_response`"
 
       unless args[:assert_meta_tag] == false
         content = ab_test.meta_tag_name + ':' + requested_variant.variant_name

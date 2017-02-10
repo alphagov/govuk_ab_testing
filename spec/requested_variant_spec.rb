@@ -63,7 +63,7 @@ RSpec.describe GovukAbTesting::RequestedVariant do
     it "appends if the Vary header is already set" do
       activesupport_request = double(headers: { 'HTTP_GOVUK_ABTEST_EDUCATIONNAV' => 'A'})
       requested_variant = ab_test.requested_variant(activesupport_request)
-      response = double(headers: { 'Vary' => 'GOVUK-OtherHeader'})
+      response = double(headers: { 'Vary' => 'GOVUK-OtherHeader' })
 
       requested_variant.configure_response(response)
 

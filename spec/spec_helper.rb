@@ -14,6 +14,9 @@ class FakeMinitestControllerTestCase
   def assert_select(*)
   end
 
+  def assert_match(*)
+  end
+
   def response
     FakeRequestResponseObject.new
   end
