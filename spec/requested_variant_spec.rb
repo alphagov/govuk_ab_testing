@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe GovukAbTesting::RequestedVariant do
   def ab_test
-    GovukAbTesting::AbTest.new("EducationNav")
+    GovukAbTesting::AbTest.new("EducationNav", dimension: 500)
   end
 
   describe '#variant_name' do
@@ -38,12 +38,14 @@ RSpec.describe GovukAbTesting::RequestedVariant do
   end
 
   describe '#analytics_meta_tag' do
-    it "returns the tag" do
+    it "returns the tag with the analytics dimension" do
       activesupport_request = double(headers: { 'HTTP_GOVUK_ABTEST_EDUCATIONNAV' => 'A'})
 
-      requested_variant = ab_test.requested_variant(activesupport_request)
+      requested_variant = GovukAbTesting::AbTest.new("EducationNav", dimension: 207).
+        requested_variant(activesupport_request)
 
-      expect(requested_variant.analytics_meta_tag).to eql("<meta name=\"govuk:ab-test\" content=\"EducationNav:A\">")
+      expect(requested_variant.analytics_meta_tag).to eql(
+        "<meta name=\"govuk:ab-test\" content=\"EducationNav:A\" data-analytics-dimension=\"207\">")
     end
   end
 

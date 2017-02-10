@@ -29,7 +29,8 @@ that you pass to the Gem. The cookie name is case-sensitive.
 To enable testing in the app, your Rails app needs:
 
 1. Some piece of logic to be A/B tested
-2. A HTML meta tag that will be used to measure the results
+2. A HTML meta tag that will be used to measure the results, and which specifies
+the dimension to use in Google Analytics
 3. A response HTTP header that tells Fastly you're doing an A/B test
 
 Let's say you have this controller:
@@ -38,7 +39,7 @@ Let's say you have this controller:
 # app/controllers/party_controller.rb
 class PartyController < ApplicationController
   def show
-    ab_test = GovukAbTesting::AbTest.new("your_ab_test_name")
+    ab_test = GovukAbTesting::AbTest.new("your_ab_test_name", dimension: 300)
     @requested_variant = ab_test.requested_variant(request)
     @requested_variant.configure_response(response)
 
