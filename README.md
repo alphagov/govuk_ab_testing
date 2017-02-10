@@ -112,8 +112,7 @@ class PartyControllerTest < ActionController::TestCase
   include GovukAbTesting::MinitestHelpers
 
   should "show the original " do
-    analytics_dimension = 123
-    setup_ab_variant("your_ab_test_name", "B", analytics_dimension)
+    setup_ab_variant("your_ab_test_name", "B") # optionally pass in a analytics dimension as the third argument
 
     get :show
 
