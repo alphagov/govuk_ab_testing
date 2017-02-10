@@ -112,7 +112,8 @@ class PartyControllerTest < ActionController::TestCase
   include GovukAbTesting::MinitestHelpers
 
   should "show the original " do
-    add_ab_test_header("your_ab_test_name", "B")
+    analytics_dimension = 123
+    setup_ab_variant("your_ab_test_name", "B", analytics_dimension)
 
     get :show
 

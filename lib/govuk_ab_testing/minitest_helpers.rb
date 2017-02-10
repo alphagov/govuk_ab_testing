@@ -22,8 +22,8 @@ module GovukAbTesting
       end
     end
 
-    def setup_ab_variant(ab_test_name, variant)
-      ab_test = GovukAbTesting::AbTest.new(ab_test_name)
+    def setup_ab_variant(ab_test_name, variant, dimension)
+      ab_test = GovukAbTesting::AbTest.new(ab_test_name, dimension: dimension)
 
       @request.headers[ab_test.request_header] = variant
     end
