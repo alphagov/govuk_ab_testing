@@ -5,9 +5,12 @@ module GovukAbTesting
     # @param ab_test [AbTest] the A/B test being performed
     # @param request [ApplicationController::Request] the `request` in the
     # controller.
-    def initialize(ab_test, request)
+    # @param dimension [Integer] the dimension registered with Google Analytics
+    # for this specific A/B test
+    def initialize(ab_test, request, dimension)
       @ab_test = ab_test
       @request = request
+      @dimension = dimension
     end
 
     # Get the bucket this user is in
@@ -39,7 +42,9 @@ module GovukAbTesting
     #
     # @return [String]
     def analytics_meta_tag
-      '<meta name="govuk:ab-test" content="' + ab_test.meta_tag_name + ':' + variant_name + '">'
+      '<meta name="govuk:ab-test" ' +
+        'content="' + ab_test.meta_tag_name + ':' + variant_name + '" ' +
+        'data-analytics-dimension="' + @dimension.to_s + '">'
     end
   end
 end

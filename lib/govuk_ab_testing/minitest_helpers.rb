@@ -3,7 +3,7 @@ module GovukAbTesting
     def with_variant(args)
       ab_test_name, variant = args.first
 
-      ab_test = GovukAbTesting::AbTest.new(ab_test_name.to_s)
+      ab_test = GovukAbTesting::AbTest.new(ab_test_name.to_s, dimension: args[:dimension])
 
       @request.headers[ab_test.request_header] = variant
       requested_variant = ab_test.requested_variant(@request)
@@ -13,8 +13,11 @@ module GovukAbTesting
       assert_equal ab_test.response_header, response.headers['Vary'], "You probably forgot to use `configure_response`"
 
       unless args[:assert_meta_tag] == false
+        raise "Cannot test the A/B meta tag because no expected :dimension parameter was specified by test" unless args[:dimension]
+
         assert_meta_tag "govuk:ab-test",
           ab_test.meta_tag_name + ':' + requested_variant.variant_name,
+          args[:dimension],
           "You probably forgot to add the `analytics_meta_tag`"
       end
     end
@@ -34,8 +37,8 @@ module GovukAbTesting
 
   private
 
-    def assert_meta_tag(name, content, message)
-      assert_select "meta[name='#{name}'][content='#{content}']", 1, message
+    def assert_meta_tag(name, content, dimension, message)
+      assert_select "meta[name='#{name}'][content='#{content}'][data-analytics-dimension='#{dimension}']", 1, message
     end
   end
 end
