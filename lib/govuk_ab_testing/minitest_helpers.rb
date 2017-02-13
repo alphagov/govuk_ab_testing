@@ -26,7 +26,7 @@ module GovukAbTesting
       @request.headers[ab_test.request_header] = variant
     end
 
-    def assert_unaffected_by_ab_test
+    def assert_response_not_modified_for_ab_test
       assert_nil response.headers['Vary'],
         "`Vary` header is being added to a page which is outside of the A/B test"
 
