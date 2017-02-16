@@ -23,7 +23,6 @@ node {
     }
 
     stage('Tests') {
-      govuk.setEnvar('RAILS_ENV', 'test')
       govuk.runTests()
     }
 
