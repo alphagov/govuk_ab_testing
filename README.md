@@ -64,6 +64,8 @@ by the extension and analytics.
 
 #### Test helpers
 
+##### Minitest
+
 The most common usage of an A/B test is to serve two different variants of the
 same page. In this situation, you can test the controller using `with_variant`.
 It will configure the request and assert that the response is configured
@@ -120,6 +122,36 @@ class PartyControllerTest < ActionController::TestCase
   end
 end
 ```
+
+##### RSpec + Capybara
+
+It is also possible to use `with_variant` in RSpec tests that use Capybara. Here
+is an example of a spec file:
+
+```ruby
+# spec/features/ab_testing_spec.rb
+feature "Viewing a page with an A/B test" do
+  include GovukAbTesting::RspecCapybaraHelpers
+
+  scenario "viewing the B version of the page" do
+    with_variant your_ab_test_name: 'B' do
+      visit root_path
+
+      expect(page).to have_breadcrumbs
+      expect(page).to have_beta_label
+    end
+  end
+end
+```
+
+Please note that `with_variant` in `GovukAbTesting::RspecCapybaraHelpers`
+expects both `page` (Capybara session) and RSpec expectations to be available.
+
+As with the `minitest` version, you can also pass in the following options to
+`with_variant`:
+
+- `assert_meta_tag: false`
+- `dimension: <number>`
 
 ### Running the test suite
 

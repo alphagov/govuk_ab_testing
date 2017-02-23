@@ -1,4 +1,5 @@
 require "spec_helper"
+require './spec/support/fake_minitest_controller_test_case'
 
 class AnExampleMiniTestCase < FakeMinitestControllerTestCase
   include GovukAbTesting::MinitestHelpers
