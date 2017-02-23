@@ -5,6 +5,9 @@ class FakeMinitestControllerTestCase
     @request = FakeRequestResponseObject.new
   end
 
+  def assert(*)
+  end
+
   def assert_equal(*)
   end
 
@@ -14,8 +17,28 @@ class FakeMinitestControllerTestCase
   def assert_match(*)
   end
 
+  def css_select(*)
+    [
+      FakeNokogiriElement.new
+    ]
+  end
+
   def response
     FakeRequestResponseObject.new
+  end
+
+  class FakeNokogiriElement
+    def attributes
+      {
+        'content' => FakeNokogiriAttr.new,
+        'data-analytics-dimension' => FakeNokogiriAttr.new
+      }
+    end
+  end
+
+  class FakeNokogiriAttr
+    def value
+    end
   end
 
   class FakeRequestResponseObject
