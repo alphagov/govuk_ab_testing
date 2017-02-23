@@ -1,5 +1,7 @@
 #!/usr/bin/env groovy
 
+REPOSITORY = 'govuk_ab_testing'
+
 node {
   def govuk = load '/var/lib/jenkins/groovy_scripts/govuk_jenkinslib.groovy'
 
@@ -28,7 +30,7 @@ node {
 
     if(env.BRANCH_NAME == "master") {
       stage('Publish Gem') {
-        govuk.runRakeTask("publish_gem --trace")
+        govuk.publishGem(REPOSITORY, env.BRANCH_NAME)
       }
     }
 
