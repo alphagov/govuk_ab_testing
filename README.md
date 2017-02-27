@@ -33,7 +33,21 @@ To enable testing in the app, your Rails app needs:
 the dimension to use in Google Analytics
 3. A response HTTP header that tells Fastly you're doing an A/B test
 
-Let's say you have this controller:
+Start by defining which acceptance testing framework you will use. This gem
+supports both Capybara and ActiveSupport. In order to configure it, add this to
+your test helper file:
+
+```
+GovukAbTesting.configure do |config|
+  config.acceptance_test_framework = :capybara # or :active_support
+end
+```
+
+If we use capybara, the gem expects `page` to be defined in the scope of the
+test cases. If we use ActiveSupport, the gem expects `@request` to be defined in
+the scope of the test cases.
+
+Now, let's say you have this controller:
 
 ```ruby
 # app/controllers/party_controller.rb
@@ -123,15 +137,15 @@ class PartyControllerTest < ActionController::TestCase
 end
 ```
 
-##### RSpec + Capybara
+##### RSpec
 
-It is also possible to use `with_variant` in RSpec tests that use Capybara. Here
-is an example of a spec file:
+It is also possible to use `with_variant` in RSpec tests. Here is an example of
+a spec file:
 
 ```ruby
 # spec/features/ab_testing_spec.rb
 feature "Viewing a page with an A/B test" do
-  include GovukAbTesting::RspecCapybaraHelpers
+  include GovukAbTesting::RspecHelpers
 
   scenario "viewing the B version of the page" do
     with_variant your_ab_test_name: 'B' do
@@ -144,14 +158,17 @@ feature "Viewing a page with an A/B test" do
 end
 ```
 
-Please note that `with_variant` in `GovukAbTesting::RspecCapybaraHelpers`
-expects both `page` (Capybara session) and RSpec expectations to be available.
-
 As with the `minitest` version, you can also pass in the following options to
 `with_variant`:
 
 - `assert_meta_tag: false`
 - `dimension: <number>`
+
+### Current limitations
+
+This library assumes we are only using one A/B test per page. The acceptance
+test classes look for only one analytics' meta tag and will fail in the presence
+of more than one.
 
 ### Running the test suite
 

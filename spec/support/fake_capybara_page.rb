@@ -17,11 +17,11 @@ class FakeCapybaraPage
     }
   end
 
-  def find(*)
-    {
+  def all(*)
+    [{
       'content' => "#{ab_test_name}:#{ab_test_variant}",
       'data-analytics-dimension' => dimension.to_s
-    }
+    }]
   end
 
   class FakeCapybaraDriver
@@ -31,6 +31,10 @@ class FakeCapybaraPage
 
     def header(name, value)
       @headers[name] = value
+    end
+
+    def options
+      @headers
     end
   end
 end

@@ -1,5 +1,10 @@
 module GovukAbTesting
   module MinitestHelpers
+    def acceptance_test_framework
+      @acceptance_test_framework ||=
+        GovukAbTesting.configuration.framework_class.new(self)
+    end
+
     def with_variant(args)
       ab_test_name, variant = args.first
       dimension = args[:dimension]
@@ -7,29 +12,27 @@ module GovukAbTesting
       ab_test =
         GovukAbTesting::AbTest.new(ab_test_name.to_s, dimension: dimension)
 
-      @request.headers[ab_test.request_header] = variant
-      requested_variant = ab_test.requested_variant(@request)
+      acceptance_test_framework.set_header(ab_test.request_header, variant)
 
       yield
 
-      assert_match ab_test.response_header, response.headers['Vary'],
+      vary_header_value = acceptance_test_framework.vary_header(response)
+      assert_match ab_test.response_header, vary_header_value,
         "You probably forgot to use `configure_response`"
 
       unless args[:assert_meta_tag] == false
         expected_content =
-          ab_test.meta_tag_name + ':' + requested_variant.variant_name
+          ab_test.meta_tag_name + ':' + variant
         message = "You probably forgot to add the `analytics_meta_tag` to the views"
-        meta_tags = css_select("meta[name='govuk:ab-test']")
+        meta_tags = acceptance_test_framework.analytics_meta_tags
 
         assert_equal(1, meta_tags.count, message)
 
-        meta_tag = meta_tags.first
-        content_value = meta_tag.attributes['content'].value
-        dimension_value = meta_tag.attributes['data-analytics-dimension'].value
+        dimension_value = acceptance_test_framework.dimension
 
         assert_equal(
           expected_content,
-          content_value,
+          acceptance_test_framework.content,
           "Meta tag's content doesn't match."
         )
 
@@ -48,7 +51,7 @@ module GovukAbTesting
     def setup_ab_variant(ab_test_name, variant, dimension = 300)
       ab_test = GovukAbTesting::AbTest.new(ab_test_name, dimension: dimension)
 
-      @request.headers[ab_test.request_header] = variant
+      acceptance_test_framework.set_header(ab_test.request_header, variant)
     end
 
     def assert_response_not_modified_for_ab_test
