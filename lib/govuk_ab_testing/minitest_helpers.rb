@@ -13,6 +13,7 @@ module GovukAbTesting
         GovukAbTesting::AbTest.new(ab_test_name.to_s, dimension: dimension)
 
       acceptance_test_framework.set_header(ab_test.request_header, variant)
+      requested_variant = ab_test.requested_variant(acceptance_test_framework.request_headers)
 
       yield
 
@@ -22,7 +23,7 @@ module GovukAbTesting
 
       unless args[:assert_meta_tag] == false
         expected_content =
-          ab_test.meta_tag_name + ':' + variant
+          ab_test.meta_tag_name + ':' + requested_variant.variant_name
         message = "You probably forgot to add the `analytics_meta_tag` to the views"
         meta_tags = acceptance_test_framework.analytics_meta_tags
 

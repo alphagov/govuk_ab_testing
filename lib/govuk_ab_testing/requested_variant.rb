@@ -1,15 +1,15 @@
 module GovukAbTesting
   class RequestedVariant
-    attr_reader :ab_test, :request
+    attr_reader :ab_test, :request_headers
 
     # @param ab_test [AbTest] the A/B test being performed
-    # @param request [ApplicationController::Request] the `request` in the
-    # controller.
+    # @param request_headers [ActionDispatch::Http::Headers] the
+    # `request.headers` in the controller.
     # @param dimension [Integer] the dimension registered with Google Analytics
     # for this specific A/B test
-    def initialize(ab_test, request, dimension)
+    def initialize(ab_test, request_headers, dimension)
       @ab_test = ab_test
-      @request = request
+      @request_headers = request_headers
       @dimension = dimension
     end
 
@@ -17,7 +17,7 @@ module GovukAbTesting
     #
     # @return [String] the current variant, "A" or "B"
     def variant_name
-      request.headers[ab_test.request_header] == "B" ? "B" : "A"
+      request_headers[ab_test.request_header] == "B" ? "B" : "A"
     end
 
     # @return [Boolean] if the user is to be served variant A

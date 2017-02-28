@@ -1,13 +1,14 @@
 module GovukAbTesting
   module AcceptanceTests
     class Capybara
-      attr_reader :capybara_page
+      attr_reader :capybara_page, :request_headers
 
       def initialize(scope)
         unless scope.respond_to?(:page)
           raise "Page is not defined, are you using capybara?"
         end
         @capybara_page = scope.page
+        @request_headers = {}
       end
 
       def request
@@ -17,6 +18,7 @@ module GovukAbTesting
       def set_header(name, value)
         capybara_page.driver.options[:headers] = { name => value }
         capybara_page.driver.header(name, value)
+        @request_headers[name] = value
       end
 
       def vary_header(*)

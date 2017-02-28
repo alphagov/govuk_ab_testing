@@ -1,7 +1,7 @@
 module GovukAbTesting
   module AcceptanceTests
     class ActiveSupport
-      attr_reader :request, :scope
+      attr_reader :request, :request_headers, :scope
 
       def initialize(scope)
         @request = scope.instance_variable_get(:@request)
@@ -9,10 +9,12 @@ module GovukAbTesting
           raise "Couldn't find '@request' defined, are you using ActiveSupport test cases?"
         end
         @scope = scope
+        @request_headers = {}
       end
 
       def set_header(name, value)
         request.headers[name] = value
+        @request_headers[name] = value
       end
 
       def vary_header(response)

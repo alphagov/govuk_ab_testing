@@ -12,7 +12,8 @@ module GovukAbTesting
       ab_test =
         GovukAbTesting::AbTest.new(ab_test_name.to_s, dimension: dimension)
 
-      acceptance_test_framework.set_header(ab_test.response_header, variant)
+      acceptance_test_framework.set_header(ab_test.request_header, variant)
+      requested_variant = ab_test.requested_variant(acceptance_test_framework.request_headers)
 
       yield
 
@@ -20,7 +21,7 @@ module GovukAbTesting
       expect(ab_test.response_header).to eq(vary_header_value)
 
       unless args[:assert_meta_tag] == false
-        content = [ab_test.meta_tag_name, variant].join(':')
+        content = [ab_test.meta_tag_name, requested_variant.variant_name].join(':')
         ab_test_metatags = acceptance_test_framework.analytics_meta_tags
 
         expect(ab_test_metatags.count).to eq(1)

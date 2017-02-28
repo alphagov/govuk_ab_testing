@@ -10,10 +10,10 @@ module GovukAbTesting
       @dimension = dimension
     end
 
-    # @param request [ApplicationController::Request] the `request` in the
-    # controller.
-    def requested_variant(request)
-      RequestedVariant.new(self, request, @dimension)
+    # @param request [ActionDispatch::Http::Headers] the `request.headers` in
+    # the controller.
+    def requested_variant(request_headers)
+      RequestedVariant.new(self, request_headers, @dimension)
     end
 
     # Internal name of the header
