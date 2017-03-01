@@ -22,7 +22,7 @@ module GovukAbTesting
       end
 
       def analytics_meta_tags
-        @analytics_meta_tags ||= scope.css_select(ANALYTICS_META_TAG_SELECTOR)
+        scope.css_select(ANALYTICS_META_TAG_SELECTOR)
       end
 
       def analytics_meta_tag
