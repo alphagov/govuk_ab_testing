@@ -1,3 +1,8 @@
+## 1.0.1
+
+* Stop memoising meta tags so `with_variant` can be used multiple times in the
+  same test cases.
+
 ## 1.0.0
 
 * Pass in request headers instead of the actual request to RequestedVariant.
