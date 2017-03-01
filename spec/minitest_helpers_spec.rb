@@ -5,6 +5,10 @@ class AnExampleMiniTestCase < FakeMinitestControllerTestCase
   include GovukAbTesting::MinitestHelpers
 
   def test_name_of_a_test
+    GovukAbTesting.configure do |config|
+      config.acceptance_test_framework = :active_support
+    end
+
     with_variant(example: 'B') do
       # We're testing the behaviour of `with_variant` here.
     end
