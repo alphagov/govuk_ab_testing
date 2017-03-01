@@ -26,8 +26,7 @@ module GovukAbTesting
       end
 
       def analytics_meta_tags
-        @analytics_meta_tags ||=
-          capybara_page.all(ANALYTICS_META_TAG_SELECTOR, visible: :all)
+        capybara_page.all(ANALYTICS_META_TAG_SELECTOR, visible: :all)
       end
 
       def analytics_meta_tag
