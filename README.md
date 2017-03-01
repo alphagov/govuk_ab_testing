@@ -132,7 +132,7 @@ class PartyControllerTest < ActionController::TestCase
 
     get :show
 
-    assert_unaffected_by_ab_test
+    assert_response_not_modified_for_ab_test
   end
 end
 ```
