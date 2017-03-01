@@ -1,4 +1,7 @@
-* Pass in request headers instead of the actual request to RequestedVariant;
+## 1.0.0
+
+* Pass in request headers instead of the actual request to RequestedVariant.
+  This is a breaking change.
 * Slit testing framework helpers from acceptance test frameworks. This means we
   can now use a combination of RSpec/Minitest and Capybara/ActiveSupport test
   cases.
