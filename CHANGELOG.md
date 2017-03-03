@@ -1,3 +1,8 @@
+## 1.0.2
+
+* Ensure `assert_response_not_modified_for_ab_test` test helper works with all
+  test frameworks
+
 ## 1.0.1
 
 * Stop memoising meta tags so `with_variant` can be used multiple times in the
@@ -7,7 +12,7 @@
 
 * Pass in request headers instead of the actual request to RequestedVariant.
   This is a breaking change.
-* Slit testing framework helpers from acceptance test frameworks. This means we
+* Split testing framework helpers from acceptance test frameworks. This means we
   can now use a combination of RSpec/Minitest and Capybara/ActiveSupport test
   cases.
 
