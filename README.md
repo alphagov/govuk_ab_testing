@@ -127,12 +127,32 @@ To test the negative case in which a page is unaffected by the A/B test:
 class PartyControllerTest < ActionController::TestCase
   include GovukAbTesting::MinitestHelpers
 
-  should "show the original " do
+  should "show the original" do
     setup_ab_variant("your_ab_test_name", "B") # optionally pass in a analytics dimension as the third argument
 
     get :show
 
     assert_response_not_modified_for_ab_test
+  end
+end
+```
+
+There are some more fine-grained assertions which you can use to test a page
+with A/B variants which should be cached separately, but which should be
+excluded from the analytics:
+
+```ruby
+# test/controllers/party_controller_test.rb
+class PartyControllerTest < ActionController::TestCase
+  include GovukAbTesting::MinitestHelpers
+
+  should "cache each variant but not add analytics" do
+    setup_ab_variant("your_ab_test_name", "B")
+
+    get :show
+
+    assert_response_is_cached_by_variant("your_ab_test_name")
+    assert_page_not_tracked_in_ab_test
   end
 end
 ```
