@@ -55,10 +55,22 @@ module GovukAbTesting
       acceptance_test_framework.set_header(ab_test.request_header, variant)
     end
 
+    def assert_response_is_cached_by_variant(ab_test_name)
+      ab_test = GovukAbTesting::AbTest.new(ab_test_name, dimension: 123)
+
+      vary_header_value = acceptance_test_framework.vary_header(response)
+      assert_match ab_test.response_header, vary_header_value,
+        "You probably forgot to use `configure_response`"
+    end
+
     def assert_response_not_modified_for_ab_test
       assert_nil acceptance_test_framework.vary_header(response),
         "`Vary` header is being added to a page which should not be modified by the A/B test"
 
+      assert_page_not_tracked_in_ab_test
+    end
+
+    def assert_page_not_tracked_in_ab_test
       meta_tags = acceptance_test_framework.analytics_meta_tags
       assert_equal(0, meta_tags.count,
         "A/B meta tag is being added to a page which should not be modified by the A/B test")
