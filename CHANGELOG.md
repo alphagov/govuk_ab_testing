@@ -1,3 +1,7 @@
+## 1.0.3
+
+* Add more Minitest helpers with more fine-grained assertions
+
 ## 1.0.2
 
 * Ensure `assert_response_not_modified_for_ab_test` test helper works with all
