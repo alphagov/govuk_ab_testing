@@ -56,10 +56,12 @@ module GovukAbTesting
     end
 
     def assert_response_not_modified_for_ab_test
-      assert_nil response.headers['Vary'],
-        "`Vary` header is being added to a page which is outside of the A/B test"
+      assert_nil acceptance_test_framework.vary_header(response),
+        "`Vary` header is being added to a page which should not be modified by the A/B test"
 
-      assert_select "meta[name='govuk:ab-test']", false
+      meta_tags = acceptance_test_framework.analytics_meta_tags
+      assert_equal(0, meta_tags.count,
+        "A/B meta tag is being added to a page which should not be modified by the A/B test")
     end
   end
 end
