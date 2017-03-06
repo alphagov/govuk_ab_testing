@@ -159,8 +159,8 @@ end
 
 ##### RSpec
 
-It is also possible to use `with_variant` in RSpec tests. Here is an example of
-a spec file:
+It is also possible to use `with_variant` and all the individual setup and
+assertions steps in RSpec tests. Here is an example of a spec file:
 
 ```ruby
 # spec/features/ab_testing_spec.rb
