@@ -1,3 +1,7 @@
+## 1.0.4
+
+* Port the individual set-up and assertion steps from Minitest to RSpec
+
 ## 1.0.3
 
 * Add more Minitest helpers with more fine-grained assertions
