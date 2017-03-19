@@ -38,6 +38,7 @@ class FakeMinitestControllerTestCase
 
   class FakeNokogiriAttr
     def value
+      "example"
     end
   end
 

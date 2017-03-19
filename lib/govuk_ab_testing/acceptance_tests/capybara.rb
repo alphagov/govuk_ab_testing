@@ -25,20 +25,19 @@ module GovukAbTesting
         capybara_page.response_headers['Vary']
       end
 
+      def analytics_meta_tags_for_test(ab_test_name)
+        analytics_meta_tags.select { |tag| tag.for_ab_test?(ab_test_name) }
+      end
+
       def analytics_meta_tags
-        capybara_page.all(ANALYTICS_META_TAG_SELECTOR, visible: :all)
-      end
+        tags = capybara_page.all(ANALYTICS_META_TAG_SELECTOR, visible: :all)
 
-      def analytics_meta_tag
-        analytics_meta_tags.first
-      end
-
-      def content
-        analytics_meta_tag['content']
-      end
-
-      def dimension
-        analytics_meta_tag['data-analytics-dimension']
+        tags.map do |tag|
+          MetaTag.new(
+            content: tag['content'],
+            dimension: tag['data-analytics-dimension']
+          )
+        end
       end
     end
   end

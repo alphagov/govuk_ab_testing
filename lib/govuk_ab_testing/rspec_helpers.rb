@@ -22,12 +22,15 @@ module GovukAbTesting
 
       unless args[:assert_meta_tag] == false
         content = [ab_test.meta_tag_name, requested_variant.variant_name].join(':')
-        ab_test_metatags = acceptance_test_framework.analytics_meta_tags
+        ab_test_metatags =
+          acceptance_test_framework.analytics_meta_tags_for_test(ab_test_name)
 
         expect(ab_test_metatags.count).to eq(1)
 
-        expect(acceptance_test_framework.content).to eq(content)
-        dimension = acceptance_test_framework.dimension
+        meta_tag = ab_test_metatags.first
+
+        expect(meta_tag.content).to eq(content)
+        dimension = meta_tag.dimension
 
         if dimension.nil?
           expect(dimension).to_not be_nil
@@ -50,15 +53,18 @@ module GovukAbTesting
       expect(vary_header_value).to eq(ab_test.response_header)
     end
 
-    def assert_response_not_modified_for_ab_test
-      expect(acceptance_test_framework.vary_header).to be_nil,
+    def assert_response_not_modified_for_ab_test(ab_test_name)
+      vary_header = acceptance_test_framework.vary_header
+
+      expect(vary_header).to_not match?(/#{ab_test_name}/),
         "`Vary` header is being added to a page which should not be modified by the A/B test"
 
-      assert_page_not_tracked_in_ab_test
+      assert_page_not_tracked_in_ab_test(ab_test_name)
     end
 
-    def assert_page_not_tracked_in_ab_test
-      meta_tags = acceptance_test_framework.analytics_meta_tags
+    def assert_page_not_tracked_in_ab_test(ab_test_name)
+      meta_tags =
+        acceptance_test_framework.analytics_meta_tags_for_test(ab_test_name)
 
       expect(meta_tags).to be_empty,
         "A/B meta tag is being added to a page which should not be modified by the A/B test"

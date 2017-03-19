@@ -21,20 +21,19 @@ module GovukAbTesting
         response.headers['Vary']
       end
 
+      def analytics_meta_tags_for_test(ab_test_name)
+        analytics_meta_tags.select { |tag| tag.for_ab_test?(ab_test_name) }
+      end
+
       def analytics_meta_tags
-        scope.css_select(ANALYTICS_META_TAG_SELECTOR)
-      end
+        tags = scope.css_select(ANALYTICS_META_TAG_SELECTOR)
 
-      def analytics_meta_tag
-        analytics_meta_tags.first
-      end
-
-      def content
-        analytics_meta_tag.attributes['content'].value
-      end
-
-      def dimension
-        analytics_meta_tag.attributes['data-analytics-dimension'].value
+        tags.map do |tag|
+          MetaTag.new(
+            content: tag.attributes['content'].value,
+            dimension: tag.attributes['data-analytics-dimension'].value
+          )
+        end
       end
     end
   end

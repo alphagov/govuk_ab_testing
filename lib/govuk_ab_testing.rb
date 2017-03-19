@@ -4,6 +4,7 @@ require "govuk_ab_testing/requested_variant"
 require "govuk_ab_testing/ab_test"
 require "govuk_ab_testing/minitest_helpers"
 require "govuk_ab_testing/rspec_helpers"
+require 'govuk_ab_testing/acceptance_tests/meta_tag'
 require 'govuk_ab_testing/acceptance_tests/capybara'
 require 'govuk_ab_testing/acceptance_tests/active_support'
 

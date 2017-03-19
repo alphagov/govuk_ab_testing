@@ -25,24 +25,25 @@ module GovukAbTesting
         expected_content =
           ab_test.meta_tag_name + ':' + requested_variant.variant_name
         message = "You probably forgot to add the `analytics_meta_tag` to the views"
-        meta_tags = acceptance_test_framework.analytics_meta_tags
+        meta_tags =
+          acceptance_test_framework.analytics_meta_tags_for_test(ab_test_name)
 
         assert_equal(1, meta_tags.count, message)
 
-        dimension_value = acceptance_test_framework.dimension
+        meta_tag = meta_tags.first
 
         assert_equal(
           expected_content,
-          acceptance_test_framework.content,
-          "Meta tag's content doesn't match."
+          meta_tag.content,
+          "Meta tag's content doesnt match."
         )
 
         if dimension.nil?
-          assert(dimension_value, "No custom dimension number found")
+          assert(meta_tag.dimension, "No custom dimension number found")
         else
           assert_equal(
             dimension.to_s,
-            dimension_value,
+            meta_tag.dimension,
             "The custom dimension found in meta tag doesn't match"
           )
         end
@@ -63,17 +64,27 @@ module GovukAbTesting
         "You probably forgot to use `configure_response`"
     end
 
-    def assert_response_not_modified_for_ab_test
-      assert_nil acceptance_test_framework.vary_header(response),
-        "`Vary` header is being added to a page which should not be modified by the A/B test"
+    def assert_response_not_modified_for_ab_test(ab_test_name)
+      vary_header = acceptance_test_framework.vary_header(response)
 
-      assert_page_not_tracked_in_ab_test
+      assert_no_match(
+        /#{ab_test_name}/,
+        vary_header,
+        "`Vary` header is being added to a page which should not be modified by the A/B test"
+      )
+
+      assert_page_not_tracked_in_ab_test(ab_test_name)
     end
 
-    def assert_page_not_tracked_in_ab_test
-      meta_tags = acceptance_test_framework.analytics_meta_tags
-      assert_equal(0, meta_tags.count,
-        "A/B meta tag is being added to a page which should not be modified by the A/B test")
+    def assert_page_not_tracked_in_ab_test(ab_test_name)
+      meta_tags =
+        acceptance_test_framework.analytics_meta_tags_for_test(ab_test_name)
+
+      assert_equal(
+        0,
+        meta_tags.count,
+        "A/B meta tag is being added to a page which should not be modified by the A/B test"
+      )
     end
   end
 end
