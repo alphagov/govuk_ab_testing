@@ -1,4 +1,4 @@
-## Unreleased
+## 2.0.0
 
 * **BREAKING CHANGE** `assert_response_not_modified_for_ab_test` now
   requires a parameter to indicate what A/B test we are referring to.
