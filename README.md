@@ -132,7 +132,7 @@ class PartyControllerTest < ActionController::TestCase
 
     get :show
 
-    assert_response_not_modified_for_ab_test
+    assert_response_not_modified_for_ab_test("your_ab_test_name")
   end
 end
 ```
@@ -152,7 +152,7 @@ class PartyControllerTest < ActionController::TestCase
     get :show
 
     assert_response_is_cached_by_variant("your_ab_test_name")
-    assert_page_not_tracked_in_ab_test
+    assert_page_not_tracked_in_ab_test("your_ab_test_name")
   end
 end
 ```

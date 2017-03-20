@@ -1,3 +1,15 @@
+## Unreleased
+
+* **BREAKING CHANGE** `assert_response_not_modified_for_ab_test` now
+  requires a parameter to indicate what A/B test we are referring to.
+  This allows for multiple A/B tests to exist without letting the test
+  cases fail in case they encounter a different A/B test in the Vary header;
+* **BREAKING CHANGE** `assert_page_not_tracked_in_ab_test` now also
+  requires a parameter to indicate what A/B test we are referring to.
+  The reason is similar to the one mentioned above;
+* New class introduced to represent a meta tag. This lets us query if a
+  given meta tag belongs to a given A/B test.
+
 ## 1.0.4
 
 * Port the individual set-up and assertion steps from Minitest to RSpec
