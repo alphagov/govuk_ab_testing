@@ -1,3 +1,10 @@
+## 2.1.0
+
+* Refactor both RSpec and Minitest helpers to use the same Abstract helper
+* Allow assertions on the Vary header for multiple concurrent A/B tests
+* Fix a broken RSpec assertion
+* Fix meta tag dimension checking
+
 ## 2.0.0
 
 * **BREAKING CHANGE** `assert_response_not_modified_for_ab_test` now
