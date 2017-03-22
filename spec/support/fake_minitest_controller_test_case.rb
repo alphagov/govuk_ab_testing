@@ -3,6 +3,7 @@
 class FakeMinitestControllerTestCase
   def initialize
     @request = FakeRequestResponseObject.new
+    @response = response
   end
 
   def assert(*)
@@ -15,6 +16,12 @@ class FakeMinitestControllerTestCase
   end
 
   def assert_match(*)
+  end
+
+  def refute_nil(*)
+  end
+
+  def refute_equal(*)
   end
 
   def css_select(*)

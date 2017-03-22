@@ -1,6 +1,9 @@
 module GovukAbTesting
   class AbTest
     attr_reader :ab_test_name
+    attr_reader :dimension
+
+    alias_method :name, :ab_test_name
 
     # @param request [String] the name of the A/B test
     # @param dimension [Integer] the dimension registered with Google Analytics
