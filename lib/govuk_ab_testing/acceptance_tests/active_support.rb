@@ -10,6 +10,7 @@ module GovukAbTesting
         end
         @scope = scope
         @request_headers = {}
+        @response = scope.instance_variable_get(:@response)
       end
 
       def set_header(name, value)
@@ -17,8 +18,8 @@ module GovukAbTesting
         @request_headers[name] = value
       end
 
-      def vary_header(response)
-        response.headers['Vary']
+      def vary_header
+        @response.headers['Vary']
       end
 
       def analytics_meta_tags_for_test(ab_test_name)
