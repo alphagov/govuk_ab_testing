@@ -64,10 +64,8 @@ module GovukAbTesting
       assert_is_empty(
         enumerable: ab_test_meta_tags,
         error_message: <<-ERROR
-          Found the following '#{ab_test_name}' A/B testing meta tag on a page that should not be modified by
-          the A/B test:
-
-            #{ab_test_meta_tags.first.content}
+          Found the '#{ab_test_name}' A/B testing meta tag on a page that should not be modified by
+          the A/B test.
 
           Check for incorrect usage of GovukAbTesting::RequestedVariant#analytics_meta_tag
         ERROR
