@@ -17,7 +17,7 @@ module GovukAbTesting
     end
 
     def assert_is_empty(enumerable:, error_message:)
-      assert_has_size(enumerable, 0, error_message)
+      assert_has_size(enumerable: enumerable, size: 0, error_message: error_message)
     end
 
     def assert_not_blank(string:, error_message:)
