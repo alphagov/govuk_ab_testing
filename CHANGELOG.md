@@ -1,3 +1,9 @@
+## 2.2.0
+
+* Remove string interpolated parameter in error message of
+* `assert_page_not_tracked_in_ab_test` which may potentially be nil.
+* Add keyname parameters for `assert_has_size` call inside `assert_is_empty`.
+
 ## 2.1.0
 
 * Refactor both RSpec and Minitest helpers to use the same Abstract helper
