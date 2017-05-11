@@ -1,3 +1,12 @@
+## 2.3.0
+
+* Fix for Rails 5.0.2 - the Active Support acceptance tests used to memoize
+  the `@request` and `@response` objects. This worked fine in Rails 4, but
+  it looks like Rails 5 now points to a different object at some point during
+  the request/response lifecycle, breaking the memoization. The fix removes
+  this memoization and directly queries the scope for each `@request` or
+  `@response`.
+
 ## 2.2.0
 
 * Remove string interpolated parameter in error message of
