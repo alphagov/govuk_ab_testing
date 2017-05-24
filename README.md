@@ -194,6 +194,14 @@ of more than one.
 
 `bundle exec rake`
 
+### Testing in a browser
+
+If you want to test this behaviour in a browser then you should use the
+[GOV.UK Toolkit for Chrome](https://github.com/alphagov/govuk-toolkit-chrome).
+
+This detects when you have a test running on a page and enables you to choose
+between variants.
+
 ### Documentation
 
 See [RubyDoc](http://www.rubydoc.info/gems/govuk_ab_testing) for some limited documentation.
