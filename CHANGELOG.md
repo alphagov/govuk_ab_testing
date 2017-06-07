@@ -1,3 +1,9 @@
+## Unreleased
+
+* Fix bug in order to allow us to set multiple headers (i.e. A/B tests) in a
+  test using Capybara. This is important when running multiple A/B tests at
+  once.
+
 ## 2.3.0
 
 * Fix for Rails 5.0.2 - the Active Support acceptance tests used to memoize
