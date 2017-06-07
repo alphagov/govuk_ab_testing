@@ -16,7 +16,8 @@ module GovukAbTesting
       end
 
       def set_header(name, value)
-        capybara_page.driver.options[:headers] = { name => value }
+        capybara_page.driver.options[:headers] ||= {}
+        capybara_page.driver.options[:headers][name] = value
         capybara_page.driver.header(name, value)
         @request_headers[name] = value
       end
