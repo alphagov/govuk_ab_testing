@@ -1,4 +1,4 @@
-## Unreleased
+## 2.3.1
 
 * Fix bug in order to allow us to set multiple headers (i.e. A/B tests) in a
   test using Capybara. This is important when running multiple A/B tests at
