@@ -22,12 +22,25 @@ module GovukAbTesting
 
     # @return [Boolean] if the user is to be served variant A
     def variant_a?
+      warn 'DEPRECATION WARNING: the method `variant_a?` is deprecated. use `variant?("A")` instead'
+
       variant_name == "A"
     end
 
     # @return [Boolean] if the user is to be served variant B
     def variant_b?
+      warn 'DEPRECATION WARNING: the method `variant_b?` is deprecated. use `variant?("B")` instead'
+
       variant_name == "B"
+    end
+
+    # Check if the user should be served a specific variant
+    #
+    # @param [String or Symbol] the name of the variant
+    #
+    # @return [Boolean] if the user is to be served variant :name
+    def variant?(name)
+      request_headers[ab_test.request_header] == name.to_s
     end
 
     # Configure the response
@@ -42,7 +55,8 @@ module GovukAbTesting
     # @return [String]
     def analytics_meta_tag
       '<meta name="govuk:ab-test" ' +
-        'content="' + ab_test.meta_tag_name + ':' + variant_name + '" ' +
+        'content="' + ab_test.meta_tag_name + ':' +
+        request_headers[ab_test.request_header] + '" ' +
         'data-analytics-dimension="' + @dimension.to_s + '">'
     end
   end

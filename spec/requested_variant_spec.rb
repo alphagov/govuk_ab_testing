@@ -37,6 +37,17 @@ RSpec.describe GovukAbTesting::RequestedVariant do
     end
   end
 
+  describe '#variant?' do
+    it "returns the variant" do
+      request_headers = { 'HTTP_GOVUK_ABTEST_EDUCATIONNAV' => 'B' }
+
+      requested_variant = ab_test.requested_variant(request_headers)
+
+      expect(requested_variant.variant?('A')).to eql(false)
+      expect(requested_variant.variant?('B')).to eql(true)
+    end
+  end
+
   describe '#analytics_meta_tag' do
     it "returns the tag with the analytics dimension" do
       request_headers = { 'HTTP_GOVUK_ABTEST_EDUCATIONNAV' => 'A' }

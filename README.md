@@ -54,7 +54,7 @@ class PartyController < ApplicationController
     @requested_variant = ab_test.requested_variant(request.headers)
     @requested_variant.configure_response(response)
 
-    if @requested_variant.variant_b?
+    if @requested_variant.variant?('B')
       render "new_show_template_to_be_tested"
     else
       render "show"

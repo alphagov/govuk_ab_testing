@@ -1,3 +1,13 @@
+## Unreleased
+
+* Add new method to `RequestedVariant` to query if a user is in a given variant.
+  The method is `variant?(name)`, where `name` is the name of the variant.
+  This new method allows for generic variant names, which are useful when
+  reusing A/B testing cookies/headers. If the cookie name and header name are
+  generic, the variant value should provide details on what test is running.
+* Add deprecation warnings to `variant_a?` and `variant_b?`, as they will be
+  replaced by the method `variant?(name)`.
+
 ## 2.3.1
 
 * Fix bug in order to allow us to set multiple headers (i.e. A/B tests) in a
