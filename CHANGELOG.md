@@ -1,5 +1,9 @@
 ## Unreleased
 
+* Add two new optional parameters to `GovukAbTesting::AbTest`:
+  `allowed_variants` and `control_variant`. These allow us to override the
+  traditional naming of the A/B tests and also setup a multivariate test if
+  needed.
 * Add new method to `RequestedVariant` to query if a user is in a given variant.
   The method is `variant?(name)`, where `name` is the name of the variant.
   This new method allows for generic variant names, which are useful when
