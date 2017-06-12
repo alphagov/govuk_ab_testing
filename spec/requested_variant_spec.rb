@@ -46,6 +46,18 @@ RSpec.describe GovukAbTesting::RequestedVariant do
       expect(requested_variant.variant?('A')).to eql(false)
       expect(requested_variant.variant?('B')).to eql(true)
     end
+
+    it 'raises with an invalid variant name' do
+      request_headers = { 'HTTP_GOVUK_ABTEST_EDUCATIONNAV' => 'B' }
+
+      requested_variant = ab_test.requested_variant(request_headers)
+
+      expect {
+        requested_variant.variant?('InvalidName')
+      }.to raise_error(
+        "Invalid variant name 'InvalidName'. Allowed variants are: #{ab_test.allowed_variants}"
+      )
+    end
   end
 
   describe '#analytics_meta_tag' do

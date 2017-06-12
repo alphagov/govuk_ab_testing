@@ -44,6 +44,11 @@ module GovukAbTesting
     #
     # @return [Boolean] if the user is to be served variant :name
     def variant?(name)
+      error_message =
+        "Invalid variant name '#{name}'. Allowed variants are: #{ab_test.allowed_variants}"
+
+      raise error_message unless ab_test.allowed_variants.include?(name.to_s)
+
       variant_name == name.to_s
     end
 
