@@ -1,4 +1,4 @@
-## Unreleased
+## 2.4.0
 
 * Add two new optional parameters to `GovukAbTesting::AbTest`:
   `allowed_variants` and `control_variant`. These allow us to override the
