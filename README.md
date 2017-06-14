@@ -50,12 +50,20 @@ Now, let's say you have this controller:
 # app/controllers/party_controller.rb
 class PartyController < ApplicationController
   def show
-    ab_test = GovukAbTesting::AbTest.new("your_ab_test_name", dimension: 300)
+    ab_test = GovukAbTesting::AbTest.new(
+      "your_ab_test_name",
+      dimension: 300,
+      allowed_variants: ['NoChange', 'LongTitle', 'ShortTitle'],
+      control_variant: 'NoChange'
+    )
     @requested_variant = ab_test.requested_variant(request.headers)
     @requested_variant.configure_response(response)
 
-    if @requested_variant.variant?('B')
-      render "new_show_template_to_be_tested"
+    case true
+    when @requested_variant.variant?('LongTitle')
+      render "show_template_with_long_title"
+    when @requested_variant.variant?('ShortTitle')
+      render "show_template_with_short_title"
     else
       render "show"
     end
@@ -63,7 +71,11 @@ class PartyController < ApplicationController
 end
 ```
 
-Add this to your layouts, so that we have a meta tag that can be picked up
+In this example, we are running a multivariate test with 3 options being
+tested: the existing version (control), and two title changes. The minimum
+number of variants in any test should be two.
+
+Then, add this to your layouts, so that we have a meta tag that can be picked up
 by the extension and analytics.
 
 ```html
@@ -72,6 +84,9 @@ by the extension and analytics.
   <%= @requested_variant.analytics_meta_tag.html_safe %>
 </head>
 ```
+
+The analytics meta tag will include the allowed variants so the extension knows
+which variants to suggest the user.
 
 #### Test helpers
 
@@ -180,12 +195,6 @@ As with the `minitest` version, you can also pass in the following options to
 
 - `assert_meta_tag: false`
 - `dimension: <number>`
-
-### Current limitations
-
-This library assumes we are only using one A/B test per page. The acceptance
-test classes look for only one analytics' meta tag and will fail in the presence
-of more than one.
 
 ### Running the test suite
 
