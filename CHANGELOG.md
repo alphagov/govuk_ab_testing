@@ -1,4 +1,4 @@
-## Unreleased
+## 2.4.1
 
 * Add extra validation to ActiveSupport assertions to help debug test failures.
   In order to make assertions about the `meta` tags, the view must be rendered
