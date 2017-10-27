@@ -34,6 +34,11 @@ module GovukAbTesting
       end
 
       def analytics_meta_tags
+        if scope.response.body.empty?
+          raise "Cannot find response body. If this is an RSpec Rails test, " +
+            "check that 'render_views' is being called."
+        end
+
         tags = scope.css_select(ANALYTICS_META_TAG_SELECTOR)
 
         tags.map do |tag|

@@ -172,7 +172,7 @@ end
 ##### RSpec
 
 It is also possible to use `with_variant` and all the individual setup and
-assertions steps in RSpec tests. Here is an example of a spec file:
+assertions steps in RSpec tests. Here is an example of a Capybara feature file:
 
 ```ruby
 # spec/features/ab_testing_spec.rb
@@ -185,6 +185,24 @@ feature "Viewing a page with an A/B test" do
 
       expect(page).to have_breadcrumbs
       expect(page).to have_beta_label
+    end
+  end
+end
+```
+
+And here is an RSpec controller test:
+
+```ruby
+# spec/controllers/some_controller_spec.rb
+describe SomeController, type :controller do
+  include GovukAbTesting::RspecHelpers
+
+  # RSpec doesn't render views for controller specs by default
+  render_views
+
+  it "should render the B version of the page" do
+    with_variant your_ab_test_name: 'B' do
+      get :index
     end
   end
 end
