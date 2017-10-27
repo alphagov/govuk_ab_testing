@@ -53,5 +53,9 @@ class FakeMinitestControllerTestCase
     def headers
       {}
     end
+
+    def body
+      "some content in the page body"
+    end
   end
 end

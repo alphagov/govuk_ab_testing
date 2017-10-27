@@ -1,3 +1,11 @@
+## Unreleased
+
+* Add extra validation to ActiveSupport assertions to help debug test failures.
+  In order to make assertions about the `meta` tags, the view must be rendered
+  in the test. RSpec Rails tests do not do this by default, so you need to call
+  `render_views` explicitly. Without this check, tests fail with a cryptic error
+  message "undefined method 'document' for nil:NilClass".
+
 ## 2.4.0
 
 * Add two new optional parameters to `GovukAbTesting::AbTest`:
