@@ -21,9 +21,8 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_development_dependency "govuk-lint", "~> 1.2.1"
-  spec.add_development_dependency "yard", "~> 0.8"
-  spec.add_development_dependency "gem_publisher", "~> 1.5.0"
+  spec.add_development_dependency "rake"
+  spec.add_development_dependency "rspec"
+  spec.add_development_dependency "rubocop-govuk"
+  spec.add_development_dependency "yard"
 end
