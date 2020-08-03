@@ -1,3 +1,8 @@
+## Unreleased
+
+* Updated gem dependencies and development ruby version to 2.6.6
+* Fixed new rubocop violations
+
 ## 2.4.1
 
 * Add extra validation to ActiveSupport assertions to help debug test failures.
