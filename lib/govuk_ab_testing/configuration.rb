@@ -1,7 +1,7 @@
 module GovukAbTesting
   class Configuration
     VALID_FRAMEWORKS = %i[capybara active_support].freeze
-    attr_accessor :config, :acceptance_test_framework
+    attr_accessor :config
 
     def initialize
       @config = {}
