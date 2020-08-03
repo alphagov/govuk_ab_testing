@@ -26,7 +26,7 @@ module GovukAbTesting
       end
 
       def vary_header
-        response.headers['Vary']
+        response.headers["Vary"]
       end
 
       def analytics_meta_tags_for_test(ab_test_name)
@@ -35,7 +35,7 @@ module GovukAbTesting
 
       def analytics_meta_tags
         if scope.response.body.empty?
-          raise "Cannot find response body. If this is an RSpec Rails test, " +
+          raise "Cannot find response body. If this is an RSpec Rails test, " \
             "check that 'render_views' is being called."
         end
 
@@ -43,8 +43,8 @@ module GovukAbTesting
 
         tags.map do |tag|
           MetaTag.new(
-            content: tag.attributes['content'].value,
-            dimension: tag.attributes['data-analytics-dimension'].value
+            content: tag.attributes["content"].value,
+            dimension: tag.attributes["data-analytics-dimension"].value,
           )
         end
       end

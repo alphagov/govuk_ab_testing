@@ -56,17 +56,17 @@ module GovukAbTesting
     #
     # @param [ApplicationController::Response] the `response` in the controller
     def configure_response(response)
-      response.headers['Vary'] = [response.headers['Vary'], ab_test.response_header].compact.join(', ')
+      response.headers["Vary"] = [response.headers["Vary"], ab_test.response_header].compact.join(", ")
     end
 
     # HTML meta tag used to track the results of your experiment
     #
     # @return [String]
     def analytics_meta_tag
-      '<meta name="govuk:ab-test" ' +
-        'content="' + ab_test.meta_tag_name + ':' + variant_name + '" ' +
-        'data-analytics-dimension="' + @dimension.to_s + '" ' +
-        'data-allowed-variants="' + ab_test.allowed_variants.join(',') + '">'
+      '<meta name="govuk:ab-test" ' \
+        'content="' + ab_test.meta_tag_name + ":" + variant_name + '" ' \
+        'data-analytics-dimension="' + @dimension.to_s + '" ' \
+        'data-allowed-variants="' + ab_test.allowed_variants.join(",") + '">'
     end
   end
 end

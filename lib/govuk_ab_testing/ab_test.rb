@@ -13,7 +13,7 @@ module GovukAbTesting
     # @param allowed_variants [Array] an array of Strings representing the
     # possible variants
     # @param control_variant [String] the control variant (typically 'A')
-    def initialize(ab_test_name, dimension:, allowed_variants: %w(A B), control_variant: 'A')
+    def initialize(ab_test_name, dimension:, allowed_variants: %w[A B], control_variant: "A")
       @ab_test_name = ab_test_name
       @dimension = dimension
       @allowed_variants = allowed_variants

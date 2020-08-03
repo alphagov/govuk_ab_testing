@@ -1,13 +1,11 @@
 require "bundler/gem_tasks"
 require "rspec/core/rake_task"
-require "gem_publisher"
+require "rubocop/rake_task"
 
+RuboCop::RakeTask.new
 RSpec::Core::RakeTask.new(:spec)
 
-task :default => :spec
+desc "Linting for Ruby"
+task lint: :rubocop
 
-desc "Publish gem to RubyGems"
-task :publish_gem do |_t|
-  published_gem = GemPublisher.publish_if_updated("govuk_ab_testing.gemspec", :rubygems)
-  puts "Published #{published_gem}" if published_gem
-end
+task default: %i[lint spec]

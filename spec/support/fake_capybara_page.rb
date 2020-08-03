@@ -13,14 +13,14 @@ class FakeCapybaraPage
 
   def response_headers
     {
-      'Vary' => "GOVUK-ABTest-#{ab_test_name}"
+      "Vary" => "GOVUK-ABTest-#{ab_test_name}",
     }
   end
 
   def all(*)
     [{
-      'content' => "#{ab_test_name}:#{ab_test_variant}",
-      'data-analytics-dimension' => dimension.to_s
+      "content" => "#{ab_test_name}:#{ab_test_variant}",
+      "data-analytics-dimension" => dimension.to_s,
     }]
   end
 

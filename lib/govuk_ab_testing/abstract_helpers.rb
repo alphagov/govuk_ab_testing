@@ -31,7 +31,7 @@ module GovukAbTesting
       assert_contains_substring(
         string: vary_header_value,
         substring: ab_test.response_header,
-        error_message: <<-ERROR
+        error_message: <<-ERROR,
           The 'Vary' header is not being set for the '#{ab_test.name}' A/B test.
           You will need to use GovukAbTesting::RequestedVariant#configure_response in your controller:
 
@@ -46,7 +46,7 @@ module GovukAbTesting
       assert_does_not_contain_substring(
         string: vary_header,
         substring: ab_test_name,
-        error_message: <<-ERROR
+        error_message: <<-ERROR,
           The 'Vary' header is being set by A/B test '#{ab_test_name}' on a page that should not be modified
           by the A/B test. Check for incorrect usage of GovukAbTesting::RequestedVariant#configure_response
           in your controller.
@@ -63,7 +63,7 @@ module GovukAbTesting
 
       assert_is_empty(
         enumerable: ab_test_meta_tags,
-        error_message: <<-ERROR
+        error_message: <<-ERROR,
           Found the '#{ab_test_name}' A/B testing meta tag on a page that should not be modified by
           the A/B test.
 
@@ -81,7 +81,7 @@ module GovukAbTesting
       assert_has_size(
         enumerable: ab_test_meta_tags,
         size: 1,
-        error_message: <<-ERROR
+        error_message: <<-ERROR,
           Incorrect number of analytics meta tags on the page for A/B test '#{ab_test.name}'.
           You may need to check usage of GovukAbTesting::RequestedVariant#analytics_meta_tag in your template(s):
 
@@ -96,7 +96,7 @@ module GovukAbTesting
       assert_is_equal(
         expected: expected_metatag_content,
         actual: meta_tag.content,
-        error_message: <<-ERROR
+        error_message: <<-ERROR,
           The analytics meta tag content for A/B test '#{ab_test.name}' does not match the expected value.
           You may need to use GovukAbTesting::RequestedVariant#analytics_meta_tag in your template(s):
 
@@ -107,7 +107,7 @@ module GovukAbTesting
 
       assert_not_blank(
         string: meta_tag.dimension,
-        error_message: <<-ERROR
+        error_message: <<-ERROR,
           The meta tag dimension for the '#{ab_test_name}' A/B test is blank.
         ERROR
       )
@@ -116,7 +116,7 @@ module GovukAbTesting
         assert_is_equal(
           expected: ab_test.dimension.to_s,
           actual: meta_tag.dimension.to_s,
-          error_message: <<-ERROR
+          error_message: <<-ERROR,
             The analytics meta tag for the '#{ab_test.name}' A/B test does not match the expected value.
           ERROR
         )
