@@ -1,14 +1,14 @@
 require "spec_helper"
-require './spec/support/fake_capybara_page'
+require "./spec/support/fake_capybara_page"
 
 RSpec.describe GovukAbTesting::RspecHelpers do
   include GovukAbTesting::RspecHelpers
 
   def page
-    @page ||= FakeCapybaraPage.new(:example, 'B', 100)
+    @page ||= FakeCapybaraPage.new(:example, "B", 100)
   end
 
-  it 'tests the behviour of with_variant' do
+  it "tests the behviour of with_variant" do
     GovukAbTesting.configure do |config|
       config.acceptance_test_framework = :capybara
     end
@@ -16,7 +16,7 @@ RSpec.describe GovukAbTesting::RspecHelpers do
     object = double(call: true)
     expect(object).to receive(:call)
 
-    with_variant example: 'B' do
+    with_variant example: "B" do
       object.call
     end
   end

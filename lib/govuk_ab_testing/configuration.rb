@@ -1,6 +1,6 @@
 module GovukAbTesting
   class Configuration
-    VALID_FRAMEWORKS = %i(capybara active_support).freeze
+    VALID_FRAMEWORKS = %i[capybara active_support].freeze
     attr_accessor :config, :acceptance_test_framework
 
     def initialize
@@ -24,9 +24,9 @@ module GovukAbTesting
       @framework_class ||= begin
         case config[:acceptance_test_framework]
         when :capybara
-          then GovukAbTesting::AcceptanceTests::Capybara
+          GovukAbTesting::AcceptanceTests::Capybara
         when :active_support
-          then GovukAbTesting::AcceptanceTests::ActiveSupport
+          GovukAbTesting::AcceptanceTests::ActiveSupport
         else
           raise "Invalid framework #{acceptance_test_framework}"
         end

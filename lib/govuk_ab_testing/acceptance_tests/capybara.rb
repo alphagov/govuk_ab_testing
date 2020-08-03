@@ -7,6 +7,7 @@ module GovukAbTesting
         unless scope.respond_to?(:page)
           raise "Page is not defined, are you using capybara?"
         end
+
         @capybara_page = scope.page
         @request_headers = {}
       end
@@ -23,7 +24,7 @@ module GovukAbTesting
       end
 
       def vary_header(*)
-        capybara_page.response_headers['Vary']
+        capybara_page.response_headers["Vary"]
       end
 
       def analytics_meta_tags_for_test(ab_test_name)
@@ -35,8 +36,8 @@ module GovukAbTesting
 
         tags.map do |tag|
           MetaTag.new(
-            content: tag['content'],
-            dimension: tag['data-analytics-dimension']
+            content: tag["content"],
+            dimension: tag["data-analytics-dimension"],
           )
         end
       end

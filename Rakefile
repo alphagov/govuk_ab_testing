@@ -5,8 +5,7 @@ require "rubocop/rake_task"
 RuboCop::RakeTask.new
 RSpec::Core::RakeTask.new(:spec)
 
-
 desc "Linting for Ruby"
 task lint: :rubocop
 
-task default: [:lint, :spec]
+task default: %i[lint spec]

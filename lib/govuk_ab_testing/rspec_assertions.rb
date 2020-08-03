@@ -10,6 +10,7 @@ module GovukAbTesting
 
     def assert_does_not_contain_substring(string:, substring:, error_message:)
       return if string.nil?
+
       expect(string).not_to include(substring), error_message
     end
 
