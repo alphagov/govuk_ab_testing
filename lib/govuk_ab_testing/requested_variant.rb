@@ -63,9 +63,9 @@ module GovukAbTesting
     #
     # @return [String]
     def analytics_meta_tag
-      '<meta name="govuk:ab-test" ' +
-        'content="' + ab_test.meta_tag_name + ":" + variant_name + '" ' +
-        'data-analytics-dimension="' + @dimension.to_s + '" ' +
+      '<meta name="govuk:ab-test" ' \
+        'content="' + ab_test.meta_tag_name + ":" + variant_name + '" ' \
+        'data-analytics-dimension="' + @dimension.to_s + '" ' \
         'data-allowed-variants="' + ab_test.allowed_variants.join(",") + '">'
     end
   end

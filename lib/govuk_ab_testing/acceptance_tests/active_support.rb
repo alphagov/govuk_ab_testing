@@ -35,7 +35,7 @@ module GovukAbTesting
 
       def analytics_meta_tags
         if scope.response.body.empty?
-          raise "Cannot find response body. If this is an RSpec Rails test, " +
+          raise "Cannot find response body. If this is an RSpec Rails test, " \
             "check that 'render_views' is being called."
         end
 
