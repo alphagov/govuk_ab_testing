@@ -1,4 +1,4 @@
-## Unreleased
+## 2.4.2
 
 * Updated gem dependencies and development ruby version to 2.6.6
 * Fixed new rubocop violations
