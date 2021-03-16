@@ -20,7 +20,7 @@ And then execute:
 
 Before starting this, you'll need to:
 
-- [read the documentation](https://docs.publishing.service.gov.uk/manual/ab-testing.html) on how to set up an a/b test. The cookie and header name in [fastly-configure](https://github.com/alphagov/fastly-configure) and  [CDN config](https://github.digital.cabinet-office.gov.uk/gds/cdn-configs) must match the test name parameter that you pass to the Gem. The cookie name is case-sensitive.
+- [read the documentation](https://docs.publishing.service.gov.uk/manual/ab-testing.html) on how to set up an a/b test. The cookie and header name in [govuk-cdn-config](https://github.com/alphagov/govuk-cdn-config/blob/master/ab_tests/ab_tests.yaml) must match the test name parameter that you pass to the Gem. The cookie name is case-sensitive.
 - configure Google Analytics (guidelines to follow)
 
 To enable testing in the app, your Rails app needs:
