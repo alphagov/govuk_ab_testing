@@ -67,9 +67,16 @@ RSpec.describe GovukAbTesting::RequestedVariant do
       requested_variant = GovukAbTesting::AbTest.new("EducationNav", dimension: 207)
         .requested_variant(request_headers)
 
-      expect(requested_variant.analytics_meta_tag).to eql(
-        "<meta name=\"govuk:ab-test\" content=\"EducationNav:A\" data-analytics-dimension=\"207\" data-allowed-variants=\"A,B\">",
-      )
+      expected = <<~HTML
+        <meta name="govuk:ab-test"
+          content="EducationNav:A"
+          data-analytics-dimension="207"
+          data-allowed-variants="A,B">
+      HTML
+
+      expected.gsub!(/\n/, "")
+
+      expect(requested_variant.analytics_meta_tag).to eql(expected)
     end
   end
 
@@ -129,9 +136,16 @@ RSpec.describe GovukAbTesting::RequestedVariant do
 
         requested_variant = ab_test.requested_variant(request_headers)
 
-        expect(requested_variant.analytics_meta_tag).to eql(
-          "<meta name=\"govuk:ab-test\" content=\"NewTitleTest:Title1\" data-analytics-dimension=\"500\" data-allowed-variants=\"NoTitleChange,Title1,Title2\">",
-        )
+        expected = <<~HTML
+          <meta name="govuk:ab-test"
+            content="NewTitleTest:Title1"
+            data-analytics-dimension="500"
+            data-allowed-variants="NoTitleChange,Title1,Title2">
+        HTML
+
+        expected.gsub!(/\n/, "")
+
+        expect(requested_variant.analytics_meta_tag).to eql(expected)
       end
     end
   end
