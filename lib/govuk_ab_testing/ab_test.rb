@@ -1,9 +1,6 @@
 module GovukAbTesting
   class AbTest
-    attr_reader :ab_test_name
-    attr_reader :dimension
-    attr_reader :allowed_variants
-    attr_reader :control_variant
+    attr_reader :ab_test_name, :dimension, :allowed_variants, :control_variant
 
     alias_method :name, :ab_test_name
 

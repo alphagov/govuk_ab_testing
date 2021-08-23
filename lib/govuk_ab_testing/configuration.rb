@@ -21,16 +21,14 @@ module GovukAbTesting
     end
 
     def framework_class
-      @framework_class ||= begin
-        case config[:acceptance_test_framework]
-        when :capybara
-          GovukAbTesting::AcceptanceTests::Capybara
-        when :active_support
-          GovukAbTesting::AcceptanceTests::ActiveSupport
-        else
-          raise "Invalid framework #{acceptance_test_framework}"
-        end
-      end
+      @framework_class ||= case config[:acceptance_test_framework]
+                           when :capybara
+                             GovukAbTesting::AcceptanceTests::Capybara
+                           when :active_support
+                             GovukAbTesting::AcceptanceTests::ActiveSupport
+                           else
+                             raise "Invalid framework #{acceptance_test_framework}"
+                           end
     end
   end
 end
