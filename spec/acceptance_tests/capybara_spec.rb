@@ -3,8 +3,8 @@ require "spec_helper"
 describe GovukAbTesting::AcceptanceTests::Capybara do
   let(:capybara_acceptance_test) do
     driver = double(options: {}, header: true)
-    page = double("Capybara::Session", driver: driver)
-    scope = double(page: page)
+    page = double("Capybara::Session", driver:)
+    scope = double(page:)
 
     described_class.new(scope)
   end
