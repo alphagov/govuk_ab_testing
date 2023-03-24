@@ -1,3 +1,7 @@
+## Unreleased
+
+* Drop support for Ruby 2.7.
+
 ## 2.4.2
 
 * Updated gem dependencies and development ruby version to 2.6.6
