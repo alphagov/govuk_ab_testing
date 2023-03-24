@@ -2,6 +2,11 @@
 
 * Drop support for Ruby 2.7.
 
+## 2.4.3
+
+* Updated gem dependencies and development ruby version to 3.0.5
+* Fixed new rubocop violations
+
 ## 2.4.2
 
 * Updated gem dependencies and development ruby version to 2.6.6
