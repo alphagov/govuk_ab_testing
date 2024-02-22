@@ -1,3 +1,7 @@
+## Unreleased
+
+* Drop support for Ruby 3.0. The minimum required Ruby version is now 3.1
+
 ## 2.4.3
 
 * Updated gem dependencies and development ruby version to 3.0.5

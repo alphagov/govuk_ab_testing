@@ -20,7 +20,7 @@ module GovukAbTesting
     end
 
     def setup_ab_variant(ab_test_name, variant, dimension = 300)
-      ab_test = AbTest.new(ab_test_name, dimension: dimension)
+      ab_test = AbTest.new(ab_test_name, dimension:)
       acceptance_test_framework.set_header(ab_test.request_header, variant)
     end
 
@@ -73,7 +73,7 @@ module GovukAbTesting
     end
 
     def assert_page_tracked_in_ab_test(ab_test_name, variant, dimension)
-      ab_test = AbTest.new(ab_test_name, dimension: dimension)
+      ab_test = AbTest.new(ab_test_name, dimension:)
 
       ab_test_meta_tags =
         acceptance_test_framework.analytics_meta_tags_for_test(ab_test.name)
