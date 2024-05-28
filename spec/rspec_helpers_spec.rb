@@ -5,7 +5,7 @@ RSpec.describe GovukAbTesting::RspecHelpers do
   include GovukAbTesting::RspecHelpers
 
   def page
-    @page ||= FakeCapybaraPage.new(:example, "B", 100)
+    @page ||= FakeCapybaraPage.new(:example, "B")
   end
 
   it "tests the behviour of with_variant" do

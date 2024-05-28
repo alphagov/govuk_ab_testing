@@ -1,11 +1,10 @@
 module GovukAbTesting
   module AcceptanceTests
     class MetaTag
-      attr_reader :content, :dimension
+      attr_reader :content
 
-      def initialize(content:, dimension:)
+      def initialize(content:)
         @content = content
-        @dimension = dimension
       end
 
       def for_ab_test?(ab_test_name)
