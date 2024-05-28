@@ -18,19 +18,18 @@ And then execute:
 
 Before starting this, you'll need to:
 
-- [Read the documentation](https://docs.publishing.service.gov.uk/manual/ab-testing.html) for an overview on how a/b testing works on GOV.UK. 
+- [Read the documentation](https://docs.publishing.service.gov.uk/manual/ab-testing.html) for an overview on how a/b testing works on GOV.UK.
 - The cookie and header name in [govuk-cdn-config](https://github.com/alphagov/govuk-cdn-config/blob/master/ab_tests/ab_tests.yaml) must match the test name parameter that you pass to the Gem. The cookie name is case-sensitive.
 
 ## Usage
 
-### Outline 
+### Outline
 
 To enable testing in the app, your Rails app needs:
 
 1. [Some piece of logic to be A/B tested](#1-example-ab-test-logic)
 2. [A response HTTP header that tells Fastly you're doing an A/B test](#2-http-response-header-to-fastly)
-3. [A HTML meta tag that will be used to measure the results, and which specifies
-   the dimension to use in Google Analytics](#3-add-html-metatag-tags-to-your-layouts)
+3. [A HTML meta tag that will be used to measure the results in Google Analytics](#3-add-html-metatag-tags-to-your-layouts)
 
 ### 1. Example A/B test logic
 
@@ -42,7 +41,6 @@ class PartyController < ApplicationController
   def show
     ab_test = GovukAbTesting::AbTest.new(
       "your_ab_test_name",
-      dimension: 300,
       allowed_variants: ['NoChange', 'LongTitle', 'ShortTitle'],
       control_variant: 'NoChange'
     )
@@ -63,7 +61,7 @@ end
 
 In this example, we are running a multivariate test with 3 options being
 tested: the existing version (control), and two title changes. The minimum
-number of variants in any test should be two. 
+number of variants in any test should be two.
 
 ### 2. HTTP response header to Fastly
 
@@ -148,7 +146,6 @@ As with the `minitest` version, you can also pass in the following options to
 `with_variant`:
 
 - `assert_meta_tag: false`
-- `dimension: <number>`
 
 #### Minitest
 
@@ -200,7 +197,7 @@ class PartyControllerTest < ActionController::TestCase
   include GovukAbTesting::MinitestHelpers
 
   should "show the original" do
-    setup_ab_variant("your_ab_test_name", "B") # optionally pass in a analytics dimension as the third argument
+    setup_ab_variant("your_ab_test_name", "B")
 
     get :show
 

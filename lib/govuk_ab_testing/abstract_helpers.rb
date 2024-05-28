@@ -6,26 +6,25 @@ module GovukAbTesting
 
     def with_variant(args)
       ab_test_name, variant = args.first
-      dimension = args[:dimension]
 
-      setup_ab_variant(ab_test_name, variant, dimension)
+      setup_ab_variant(ab_test_name, variant)
 
       yield
 
       assert_response_is_cached_by_variant(ab_test_name)
 
       unless args[:assert_meta_tag] == false
-        assert_page_tracked_in_ab_test(ab_test_name, variant, dimension)
+        assert_page_tracked_in_ab_test(ab_test_name, variant)
       end
     end
 
-    def setup_ab_variant(ab_test_name, variant, dimension = 300)
-      ab_test = AbTest.new(ab_test_name, dimension:)
+    def setup_ab_variant(ab_test_name, variant)
+      ab_test = AbTest.new(ab_test_name)
       acceptance_test_framework.set_header(ab_test.request_header, variant)
     end
 
     def assert_response_is_cached_by_variant(ab_test_name)
-      ab_test = AbTest.new(ab_test_name, dimension: 300)
+      ab_test = AbTest.new(ab_test_name)
       vary_header_value = acceptance_test_framework.vary_header
 
       assert_contains_substring(
@@ -72,8 +71,8 @@ module GovukAbTesting
       )
     end
 
-    def assert_page_tracked_in_ab_test(ab_test_name, variant, dimension)
-      ab_test = AbTest.new(ab_test_name, dimension:)
+    def assert_page_tracked_in_ab_test(ab_test_name, variant)
+      ab_test = AbTest.new(ab_test_name)
 
       ab_test_meta_tags =
         acceptance_test_framework.analytics_meta_tags_for_test(ab_test.name)
@@ -104,23 +103,6 @@ module GovukAbTesting
 
         ERROR
       )
-
-      assert_not_blank(
-        string: meta_tag.dimension,
-        error_message: <<-ERROR,
-          The meta tag dimension for the '#{ab_test_name}' A/B test is blank.
-        ERROR
-      )
-
-      unless ab_test.dimension.nil?
-        assert_is_equal(
-          expected: ab_test.dimension.to_s,
-          actual: meta_tag.dimension.to_s,
-          error_message: <<-ERROR,
-            The analytics meta tag for the '#{ab_test.name}' A/B test does not match the expected value.
-          ERROR
-        )
-      end
     end
   end
 end
