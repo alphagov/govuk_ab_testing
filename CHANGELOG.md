@@ -1,6 +1,7 @@
 ## Unreleased
 
 * Drop support for Ruby 3.0. The minimum required Ruby version is now 3.1
+* No longer require a GA custom dimension to be passed into the GovukAbTesting::AbTest object
 
 ## 2.4.3
 

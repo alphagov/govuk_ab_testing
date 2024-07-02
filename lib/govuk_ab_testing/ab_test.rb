@@ -1,18 +1,15 @@
 module GovukAbTesting
   class AbTest
-    attr_reader :ab_test_name, :dimension, :allowed_variants, :control_variant
+    attr_reader :ab_test_name, :allowed_variants, :control_variant
 
     alias_method :name, :ab_test_name
 
     # @param request [String] the name of the A/B test
-    # @param dimension [Integer] the dimension registered with Google Analytics
-    # for this specific A/B test
     # @param allowed_variants [Array] an array of Strings representing the
     # possible variants
     # @param control_variant [String] the control variant (typically 'A')
-    def initialize(ab_test_name, dimension:, allowed_variants: %w[A B], control_variant: "A")
+    def initialize(ab_test_name, allowed_variants: %w[A B], control_variant: "A")
       @ab_test_name = ab_test_name
-      @dimension = dimension
       @allowed_variants = allowed_variants
       @control_variant = control_variant
     end
@@ -20,7 +17,7 @@ module GovukAbTesting
     # @param request [ActionDispatch::Http::Headers] the `request.headers` in
     # the controller.
     def requested_variant(request_headers)
-      RequestedVariant.new(self, request_headers, @dimension)
+      RequestedVariant.new(self, request_headers)
     end
 
     # Internal name of the header
