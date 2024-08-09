@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe GovukAbTesting::RequestedVariant do
   def ab_test
-    GovukAbTesting::AbTest.new("EducationNav", dimension: 500)
+    GovukAbTesting::AbTest.new("EducationNav")
   end
 
   describe "#variant_name" do
@@ -61,16 +61,15 @@ RSpec.describe GovukAbTesting::RequestedVariant do
   end
 
   describe "#analytics_meta_tag" do
-    it "returns the tag with the analytics dimension" do
+    it "returns the tag with the analytics data" do
       request_headers = { "HTTP_GOVUK_ABTEST_EDUCATIONNAV" => "A" }
 
-      requested_variant = GovukAbTesting::AbTest.new("EducationNav", dimension: 207)
+      requested_variant = GovukAbTesting::AbTest.new("EducationNav")
         .requested_variant(request_headers)
 
       expected = <<~HTML
         <meta name="govuk:ab-test"
           content="EducationNav:A"
-          data-analytics-dimension="207"
           data-allowed-variants="A,B">
       HTML
 
@@ -106,7 +105,6 @@ RSpec.describe GovukAbTesting::RequestedVariant do
     let(:ab_test) do
       GovukAbTesting::AbTest.new(
         "NewTitleTest",
-        dimension: 500,
         allowed_variants: %w[NoTitleChange Title1 Title2],
         control_variant: "NoTitleChange",
       )
@@ -131,7 +129,7 @@ RSpec.describe GovukAbTesting::RequestedVariant do
     end
 
     describe "#analytics_meta_tag" do
-      it "returns the tag with the analytics dimension" do
+      it "returns the tag with the analytics data" do
         request_headers = { "HTTP_GOVUK_ABTEST_NEWTITLETEST" => "Title1" }
 
         requested_variant = ab_test.requested_variant(request_headers)
@@ -139,7 +137,6 @@ RSpec.describe GovukAbTesting::RequestedVariant do
         expected = <<~HTML
           <meta name="govuk:ab-test"
             content="NewTitleTest:Title1"
-            data-analytics-dimension="500"
             data-allowed-variants="NoTitleChange,Title1,Title2">
         HTML
 

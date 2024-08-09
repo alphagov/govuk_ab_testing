@@ -32,7 +32,6 @@ class FakeMinitestControllerTestCase
     def attributes
       {
         "content" => FakeNokogiriAttr.new,
-        "data-analytics-dimension" => FakeNokogiriAttr.new,
       }
     end
   end
