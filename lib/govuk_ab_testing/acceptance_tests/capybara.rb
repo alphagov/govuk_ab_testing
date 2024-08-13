@@ -37,7 +37,6 @@ module GovukAbTesting
         tags.map do |tag|
           MetaTag.new(
             content: tag["content"],
-            dimension: tag["data-analytics-dimension"],
           )
         end
       end

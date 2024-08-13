@@ -1,10 +1,9 @@
 class FakeCapybaraPage
-  attr_reader :ab_test_name, :ab_test_variant, :dimension
+  attr_reader :ab_test_name, :ab_test_variant
 
-  def initialize(ab_test_name, ab_test_variant, dimension)
+  def initialize(ab_test_name, ab_test_variant)
     @ab_test_name = ab_test_name
     @ab_test_variant = ab_test_variant
-    @dimension = dimension
   end
 
   def driver
@@ -20,7 +19,6 @@ class FakeCapybaraPage
   def all(*)
     [{
       "content" => "#{ab_test_name}:#{ab_test_variant}",
-      "data-analytics-dimension" => dimension.to_s,
     }]
   end
 

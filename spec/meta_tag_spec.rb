@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe GovukAbTesting::AcceptanceTests::MetaTag do
   let(:meta_tag) do
-    described_class.new(content: "ABTest:B", dimension: 100)
+    described_class.new(content: "ABTest:B")
   end
 
   describe "#for_ab_test?" do

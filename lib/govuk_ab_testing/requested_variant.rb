@@ -5,12 +5,9 @@ module GovukAbTesting
     # @param ab_test [AbTest] the A/B test being performed
     # @param request_headers [ActionDispatch::Http::Headers] the
     # `request.headers` in the controller.
-    # @param dimension [Integer] the dimension registered with Google Analytics
-    # for this specific A/B test
-    def initialize(ab_test, request_headers, dimension)
+    def initialize(ab_test, request_headers)
       @ab_test = ab_test
       @request_headers = request_headers
-      @dimension = dimension
     end
 
     # Get the bucket this user is in
@@ -66,7 +63,6 @@ module GovukAbTesting
       tag = <<~HTML
         <meta name="govuk:ab-test"
           content="#{ab_test.meta_tag_name}:#{variant_name}"
-          data-analytics-dimension="#{@dimension}"
           data-allowed-variants="#{ab_test.allowed_variants.join(',')}">
       HTML
 
