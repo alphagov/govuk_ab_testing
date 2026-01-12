@@ -19,7 +19,7 @@ And then execute:
 Before starting this, you'll need to:
 
 - [Read the documentation](https://docs.publishing.service.gov.uk/manual/ab-testing.html) for an overview on how a/b testing works on GOV.UK.
-- The cookie and header name in [govuk-cdn-config](https://github.com/alphagov/govuk-cdn-config/blob/master/ab_tests/ab_tests.yaml) must match the test name parameter that you pass to the Gem. The cookie name is case-sensitive.
+- The cookie and header name in [govuk-fastly](https://github.com/alphagov/govuk-fastly/blob/main/www/ab_tests.yaml) must match the test name parameter that you pass to the Gem. The cookie name is case-sensitive.
 
 ## Usage
 
