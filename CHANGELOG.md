@@ -1,3 +1,7 @@
+## 3.1.0
+
+* Drop support for Ruby 3.1. The minimum required Ruby version is now 3.2
+
 ## 3.0.0
 
 * Drop support for Ruby 3.0. The minimum required Ruby version is now 3.1
